@@ -1,0 +1,45 @@
+{% extends "enroll/base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-4">
+        <h3 class="text-center alert alert-info ">Add New Item In List </h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="Submit" value="Add" class="btn btn-success" >
+        </form>
+    </div>
+    <div class="col-sm-7 offset-1">
+        <h3 class="text-center alert alert-info ">Show List Information </h3>
+        {% if stu %}
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NAME</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for st in stu %}
+              <tr>
+                <th scope="row">{{st.id}}</th>
+                <td>{{st.name}}</td>
+                <td>
+                    <a href="{% url 'update' st.id %}" class="text-center btn btn-warning ">Edit</a>
+                    <form action="{% url 'delete' st.id %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete" class="text-center btn btn-danger ">
+                    </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        
+        {% else %}
+        <h3 class="text-center alert alert-warning ">No Record </h3>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
